@@ -26,6 +26,20 @@ class Position:
     # Data class to store position information - Stock & Quantity
     stock: Stock 
     quantity: int 
+    
+@dataclass 
+class Portfolio:
+    # Data class to store portfolio information - List of positions
+    positions: list[Position] 
+    
+    def get_total_value(self):
+        total_value = 0
+        
+        # Loop through each position in list to retrieve each position value
+        for position in self.positions:
+            total_value += position.quantity * position.stock.usd_price
+        
+        return round(total_value, 1)
 
 def get_fx_rate(currency):
     # Fetches the exchange rate for a given currency against USD
@@ -54,11 +68,12 @@ def get_price_information(ticker, exchange):
     
     currency = price_div["data-currency-code"]  # Extract currency code
     
-    fx_rate = get_fx_rate(currency)  # Get exchange rate for the currency
     
     usd_price = price  # Default to same price if already in USD
     
     if currency != "USD":
+        fx_rate = get_fx_rate(currency)  # Get exchange rate for the currency
+
         usd_price = round(price * fx_rate, 2)  # Convert to USD if needed
     
     return {
@@ -71,6 +86,10 @@ def get_price_information(ticker, exchange):
     
 if __name__ == "__main__":
     # Main execution block, creates a Stock object and prints it
-    stock = Stock("SHOP", "TSE")
+    shop = Stock("SHOP", "TSE")
+    google = Stock("GOOGL", "NASDAQ")
+    msft = Stock("MSFT", "NASDAQ")
     
-    print (Position(stock, 10))
+    portfolio = Portfolio([Position(shop, 10), Position(google, 2), Position(msft, 6)])
+     
+    print(portfolio.get_total_value())
