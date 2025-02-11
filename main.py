@@ -23,6 +23,7 @@ class Stock:
             
 @dataclass
 class Position:
+    # Data class to store position information - Stock & Quantity
     stock: Stock 
     quantity: int 
 
