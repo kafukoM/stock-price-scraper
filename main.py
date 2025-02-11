@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
+from tabulate import tabulate
 
 @dataclass
 class Stock:
@@ -84,6 +85,38 @@ def get_price_information(ticker, exchange):
         "usd_price": usd_price
     }
     
+    
+def display_portfolio_summary(portfolio):
+    if not isinstance(portfolio, Portfolio):
+        raise TypeError("Please Provide a valid instance of Portfolio class")    
+    
+    portfolio_value = portfolio.get_total_value()
+    
+    position_data = []
+    
+    # Positions are sorted in descending order according to market value
+    for position in sorted(portfolio.positions, key= lambda x: x.quantity * x.stock.usd_price, reverse=True):
+        position_data.append(
+            [
+                position.stock.ticker,
+                position.stock.exchange,
+                position.quantity,
+                position.stock.usd_price,
+                position.quantity * position.stock.usd_price, # Market value
+                position.quantity * position.stock.usd_price / portfolio_value * 100 # Percentage of allocation
+
+            ]
+        )
+        
+    print(tabulate(position_data,
+                   headers=["Ticker", "Exchange", "Quantity", "Price", "Market value", "% Allocation"],
+                   tablefmt="psql",
+                   floatfmt=".2f"
+                   ))
+    
+    print(f"Total portfolio value: ${portfolio_value:,.2f}")
+        
+    
 if __name__ == "__main__":
     # Main execution block, creates a Stock object and prints it
     shop = Stock("SHOP", "TSE")
@@ -92,4 +125,6 @@ if __name__ == "__main__":
     
     portfolio = Portfolio([Position(shop, 10), Position(google, 2), Position(msft, 6)])
      
-    print(portfolio.get_total_value())
+    display_portfolio_summary(portfolio)
+     
+    # print(portfolio.get_total_value())
