@@ -33,7 +33,6 @@ Example function usage in Python:
 
 ```python
 from stock_scraper import get_price_information
-
 stock_info = get_price_information("AAPL", "NASDAQ")
 print(stock_info)
 ```
@@ -42,15 +41,32 @@ print(stock_info)
 
 ```python
 from stock_scraper import Stock, Position, Portfolio, display_portfolio_summary
-
 # Create stock objects
 shop = Stock("SHOP", "TSE")
 google = Stock("GOOGL", "NASDAQ")
 msft = Stock("MSFT", "NASDAQ")
-
 # Create a portfolio with stock positions
 portfolio = Portfolio([Position(shop, 10), Position(google, 2), Position(msft, 6)])
-
 # Display portfolio summary
 display_portfolio_summary(portfolio)
 ```
+
+## Future Enhancements
+
+### 1. Data Persistence
+
+### 2. Report Generation
+
+### 3. Uganda Securities Exchange Integration
+
+### 4. Offline Functionality
+
+### 5. Front-end Dashboard
+
+### 6. Commodity Price Tracking
+
+### 7. Price Alerts/Notifications
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
