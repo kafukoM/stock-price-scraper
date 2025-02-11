@@ -24,7 +24,7 @@ pip install beautifulsoup4==4.11.2 requests==2.28.2 tabulate==0.9.0
 Run the script directly to display a stock portfolio summary:
 
 ```bash
-python stock_scraper.py
+python main.py
 ```
 
 ### Fetch Stock Price Information
