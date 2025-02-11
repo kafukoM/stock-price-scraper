@@ -20,6 +20,11 @@ class Stock:
             self.currency = price_info["currency"]
             self.price = price_info["price"]
             self.usd_price = price_info["usd_price"]
+            
+@dataclass
+class Position:
+    stock: Stock 
+    quantity: int 
 
 def get_fx_rate(currency):
     # Fetches the exchange rate for a given currency against USD
@@ -65,4 +70,6 @@ def get_price_information(ticker, exchange):
     
 if __name__ == "__main__":
     # Main execution block, creates a Stock object and prints it
-    print(Stock("SHOP", "TSE"))
+    stock = Stock("SHOP", "TSE")
+    
+    print (Position(stock, 10))
